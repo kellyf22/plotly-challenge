@@ -1,4 +1,4 @@
-d3.json("../data/samples.json").then((importedData) => {
+d3.json("data/samples.json").then((importedData) => {
     console.log(importedData);
     var names = importedData.names;
     var samples = importedData.samples;
@@ -17,14 +17,17 @@ d3.json("../data/samples.json").then((importedData) => {
     function updatePlotly() {
         // Use D3 to select the dropdown menu
         var dropdownMenu = d3.select("#selDataset");
-        // Assign the value of the dropdown menu option to a variable
+
+        // Assign the value of the dropdown menu options to OTU id names
         var dataset = dropdownMenu.node().value;
         console.log(dataset);
+
+        //Get the index of the name in the dropdown in order to reference the sample to plot
         myIndex = names.indexOf(dataset);
         var sampleToPlot = samples[myIndex];
         console.log(sampleToPlot);
 
-        // BAR CHART
+        // BAR CHART---------------------------------------------------------------------------
         // Sample counts are sorted in descending order, so pick the first 10 to plot 
         var tenSampleValues = sampleToPlot.sample_values.slice(0,10);
         console.log(tenSampleValues);
@@ -42,10 +45,8 @@ d3.json("../data/samples.json").then((importedData) => {
             text: tenLabels
         };
         
-        // Create the data array for our plot
         var data1 = [trace];
-        
-        // Define our plot layout
+       
         var layout = {
             title: "Top Ten OTU Ids",
             xaxis: { title: "Counts" },
@@ -55,7 +56,7 @@ d3.json("../data/samples.json").then((importedData) => {
         // 8. Plot the chart to a div tag with id "bar-plot"
         Plotly.newPlot("bar", data1, layout);
 
-        // BUBBLE CHART
+        // BUBBLE CHART--------------------------------------------------------------------------------
         var allSampleValues = sampleToPlot.sample_values;
         console.log(allSampleValues);
         var allOTUs = sampleToPlot.otu_ids;
@@ -64,7 +65,7 @@ d3.json("../data/samples.json").then((importedData) => {
         console.log(allLabels);
         // var getColor = Plotly.d3.scale.category20(3);
         // console.log(getColor);
-        var colors = ["f72585","b5179e","7209b7","560bad","480ca8","3a0ca3","3f37c9","4361ee","4895ef","4cc9f0"]
+        var colors = ["f72585","b5179e","7209b7","560bad","480ca8","3a0ca3","3f37c9","4361ee","4895ef","4cc9f0","2b59c3","253c78","d36582","ffeecf","c9a690","c1a5a9","d999ac","f08cae","c56ca2","9a4c95","743d74","4d2d52","352442","1d1a31","7cea9c"]
 
         var traceBub = {
             x: allOTUs,
@@ -88,13 +89,13 @@ d3.json("../data/samples.json").then((importedData) => {
 
         Plotly.newPlot('bubble', dataBub, layoutBub);
 
-        // DEMOGRAPHICS DATA
+        // DEMOGRAPHICS DATA---------------------------------------------------------------------------
         var demoData = importedData.metadata[myIndex];
         console.log(demoData);
         // YOUR CODE HERE!
         var panel = d3.select("#sample-metadata");
         panel.html("");
-        
+
         console.log(panel);
         var tbody = panel.append("tbody");
             
