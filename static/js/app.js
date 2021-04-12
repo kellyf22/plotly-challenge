@@ -12,16 +12,6 @@ d3.json("../data/samples.json").then((importedData) => {
       dd_option.text(name);
     });
 
-    // I guess first I'll initialize the page with a default plot having nothing to do with anything
-    function init() {
-        data = [{
-        x: [1, 2, 3, 4, 5],
-        y: [1, 2, 4, 8, 16] }];
-    
-        Plotly.newPlot("bar", data);
-    };
-    init();
-
      // now I need a function that returns a sample corresponding to the name. So need to look at the value
     // in the dropdown and find its index in your array names.
     function updatePlotly() {
@@ -72,12 +62,17 @@ d3.json("../data/samples.json").then((importedData) => {
         console.log(allOTUs);
         var allLabels = sampleToPlot.otu_labels.map(label => String(label.split(';').slice(-1)));
         console.log(allLabels);
+        // var getColor = Plotly.d3.scale.category20(3);
+        // console.log(getColor);
+        var colors = ["f72585","b5179e","7209b7","560bad","480ca8","3a0ca3","3f37c9","4361ee","4895ef","4cc9f0"]
 
         var traceBub = {
             x: allOTUs,
             y: allSampleValues,
+            text: allLabels,
             mode: 'markers',
             marker: {
+                color: colors,
                 size: allSampleValues.map(value => Math.sqrt(value)*5)
             }
         };
@@ -88,15 +83,37 @@ d3.json("../data/samples.json").then((importedData) => {
             title: "Bubbles",
             showlegend: false,
             height: 600,
-            width: 600
+            width: 900
         };
 
-        Plotly.newPlot('bubble', dataBub, layoutBub)
+        Plotly.newPlot('bubble', dataBub, layoutBub);
+
+        // DEMOGRAPHICS DATA
+        var demoData = importedData.metadata[myIndex];
+        console.log(demoData);
+        // YOUR CODE HERE!
+        var panel = d3.select("#sample-metadata");
+        panel.html("");
+        
+        console.log(panel);
+        var tbody = panel.append("tbody");
+            
+        Object.entries(demoData).forEach(([key, value]) => {
+            var row = tbody.append("tr");
+            var cell1 = row.append("td");
+            cell1.text(key+":");
+            var cell2 = row.append("td");
+            cell2.text(value);
+        });
+        
     };
+    
     // Call updatePlotly() when a change takes place to the DOM
     d3.selectAll("body").on("change", updatePlotly);
 
+    // Call updatePlotly() to initialize the webpage
+    updatePlotly();
+
 });
-//   // Call updatePlotly() when a change takes place to the DOM
-//   d3.selectAll("#selDataset").on("change", updatePlotly);
+
   
