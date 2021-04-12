@@ -81,10 +81,10 @@ d3.json("./data/samples.json").then((importedData) => {
         var dataBub = [traceBub];
 
         var layoutBub = {
-            title: "Bubbles",
             showlegend: false,
             height: 600,
-            width: 900
+            width: 900,
+            xaxis: { title: "OTU Id" },
         };
 
         Plotly.newPlot('bubble', dataBub, layoutBub);
