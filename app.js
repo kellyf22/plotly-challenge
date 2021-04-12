@@ -65,7 +65,7 @@ d3.json("./data/samples.json").then((importedData) => {
         console.log(allLabels);
         // var getColor = Plotly.d3.scale.category20(3);
         // console.log(getColor);
-        var colors = ["f72585","b5179e","7209b7","560bad","480ca8","3a0ca3","3f37c9","4361ee","4895ef","4cc9f0","2b59c3","253c78","d36582","ffeecf","c9a690","c1a5a9","d999ac","f08cae","c56ca2","9a4c95","743d74","4d2d52","352442","1d1a31","7cea9c"]
+        var colors = ["f72585","b5179e","7209b7","560bad","480ca8","3a0ca3","3f37c9","4361ee","4895ef","4cc9f0","2b59c3","253c78","d36582","ffeecf","c9a690","c1a5a9","d999ac","f08cae","c56ca2","9a4c95","743d74","4d2d52","352442","1d1a31","7cea9c","695958","b6c8a9","c8ead3","cfffe5","cedada","c9b1bd","ed6a5a","ed6a5a","036d19","f0bcd4"]
 
         var traceBub = {
             x: allOTUs,
