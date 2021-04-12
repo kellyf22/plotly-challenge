@@ -1,4 +1,4 @@
-d3.json("data/samples.json").then((importedData) => {
+d3.json("./data/samples.json").then((importedData) => {
     console.log(importedData);
     var names = importedData.names;
     var samples = importedData.samples;
